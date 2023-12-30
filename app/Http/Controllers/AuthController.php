@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
 
 
 class AuthController extends Controller
 {
+    // Admin register
+    public function authAdmin(Request $request) {
     // Admin validation
         $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
@@ -42,6 +45,7 @@ class AuthController extends Controller
         ]);
     }
 
+    // Admin login
     public function login(Request $request) 
     {
         if(!Auth::attempt($request->only('email', 'password'))) {
@@ -61,11 +65,13 @@ class AuthController extends Controller
         ])->withCookie($cookie);
     }
     
+    // Get user
     public function user() 
     {
         return Auth::user();
     }
 
+    // Admin logout
     public function logout() 
     {
        $cookie = Cookie::forget('jwt');
