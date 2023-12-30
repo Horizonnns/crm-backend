@@ -12,9 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
+    // Admin validation
+        $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8',
+    ]);
 
-    public function register(Request $request) {
-       return User::create([
+    // Checking the validation
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
