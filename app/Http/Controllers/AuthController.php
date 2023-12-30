@@ -34,7 +34,7 @@ class AuthController extends Controller
             'phonenum' => $request->input('phonenum'),
             'role' => 'admin',
             'password' => Hash::make($request->input('password')),
-        ]);
+        ])->assignRole('admin');
 
         return response()->json(['success' => true, 'user' => $user], 201);
     }
