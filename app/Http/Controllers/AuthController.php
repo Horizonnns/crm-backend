@@ -39,10 +39,20 @@ class AuthController extends Controller
         return response()->json(['success' => true, 'user' => $user], 201);
     }
 
+    // Admin create user
+    public function authUser(Request $request) {
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'phonenum' => $request->input('phonenum'),
+            'role' => $request->input('role'),
             'password' => Hash::make($request->input('password')),
         ]);
+
+        // Get the role from the request (front-office or back-office)
+        $roleName = $request->input('role');
+        $user->assignRole($roleName);
+        return response()->json(['success' => true, 'user' => $user], 200);
     }
 
     // Admin login

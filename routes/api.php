@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('authAdmin', [\App\Http\Controllers\AuthController::class, 'authAdmin']);
 Route::get('login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('authUser', [\App\Http\Controllers\AuthController::class, 'authUser']);
 
 
 Route::middleware('auth:sanctum')->group(function() {
