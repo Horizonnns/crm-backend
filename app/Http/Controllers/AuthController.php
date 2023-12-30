@@ -24,6 +24,18 @@ class AuthController extends Controller
         return response()->json(['error' => $validator->errors()], 400);
     }
 
+    // Create a AdminUser
+       $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phonenum' => $request->input('phonenum'),
+            'role' => 'admin',
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        return response()->json(['success' => true, 'user' => $user], 201);
+    }
+
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
