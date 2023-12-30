@@ -41,6 +41,18 @@ class AuthController extends Controller
 
     // Admin create user
     public function authUser(Request $request) {
+        // User validation
+        $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8',
+    ]);
+
+        // Checking the validation
+        if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
