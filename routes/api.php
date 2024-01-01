@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::put('updateUser/{id}', [\App\Http\Controllers\AuthController::class, 'updateUser']);
 Route::delete('deleteUser/{id}', [\App\Http\Controllers\AuthController::class, 'deleteUser']);
 Route::post('authAdmin', [\App\Http\Controllers\AuthController::class, 'authAdmin']);
 Route::get('login', [\App\Http\Controllers\AuthController::class, 'login']);

@@ -101,6 +101,39 @@ class AuthController extends Controller
     return response()->json(['success' => true, 'users' => $users], 200);
     }
 
+    // Update user
+    public function updateUser(Request $request, $id) 
+    {
+    $user = User::find($id);
+
+    if (!$user) {
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+        'phonenum' => 'required|string',
+        'role' => 'required|string|in:admin,front-office,back-office',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
+    $user->update([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'phonenum' => $request->input('phonenum'),
+        'role' => $request->input('role'),
+    ]);
+
+    $user->syncRoles([$request->input('role')]);
+    $users = User::all();
+
+    return response()->json(['success' => true, 'user' => $user, 'users' => $users], 200);
+    }
+
     // Get user
     public function user() 
     {
