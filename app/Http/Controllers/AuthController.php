@@ -84,7 +84,22 @@ class AuthController extends Controller
     }
 
     return response()->json(['message' => 'Invalid credentials!'], Response::HTTP_UNAUTHORIZED);
-}
+    }
+
+    // Delete user
+    public function deleteUser($id) {
+    $user = User::find($id);
+
+    if (!$user) {
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    $user->delete();
+
+    $users = User::all();
+
+    return response()->json(['success' => true, 'users' => $users], 200);
+    }
 
     // Get user
     public function user() 
