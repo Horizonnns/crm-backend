@@ -70,25 +70,22 @@ class AuthController extends Controller
     }
 
     // Admin login
-    public function login(Request $request) 
+    public function login(Request $request)
     {
-        if(!Auth::attempt($request->only('email', 'password'))) {
-            return response([
-                'message' => 'Invalid credentials!'
-            ], Response::HTTP_UNAUTHORIZED);
-        }
+    $credentials = $request->only('email', 'password');
 
+    if (Auth::attempt($credentials)) {
         $user = Auth::user();
-
         $token = $user->createToken('token')->plainTextToken;
-
         $cookie = cookie('jwt', $token, 60 * 24); // 1 day
 
-        return response([
-            'message' => 'Success', 'accessToken' => $token,
-        ])->withCookie($cookie);
+        $users = User::all();
+        return response()->json(['user' => $user, 'accessToken' => $token, 'users' => $users], 200)->withCookie($cookie);
     }
-    
+
+    return response()->json(['message' => 'Invalid credentials!'], Response::HTTP_UNAUTHORIZED);
+}
+
     // Get user
     public function user() 
     {
