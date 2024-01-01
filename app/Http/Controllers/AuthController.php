@@ -64,7 +64,9 @@ class AuthController extends Controller
         // Get the role from the request (front-office or back-office)
         $roleName = $request->input('role');
         $user->assignRole($roleName);
-        return response()->json(['success' => true, 'user' => $user], 200);
+        
+        $users = User::all();
+        return response()->json(['success' => true, 'user' => $user, 'users' => $users], 200);
     }
 
     // Admin login
