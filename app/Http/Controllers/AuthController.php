@@ -46,6 +46,7 @@ class AuthController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8',
+        'job_title' => 'nullable|string|max:255', 
     ]);
 
         // Checking the validation
@@ -58,6 +59,7 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'phonenum' => $request->input('phonenum'),
             'role' => $request->input('role'),
+            'job_title' => $request->input('job_title'),
             'password' => Hash::make($request->input('password')),
         ]);
 
@@ -115,6 +117,7 @@ class AuthController extends Controller
         'email' => 'required|string|email|max:255|unique:users,email,'.$id,
         'phonenum' => 'required|string',
         'role' => 'required|string|in:admin,front-office,back-office',
+        'job_title' => 'required|string|max:255',
     ]);
 
     if ($validator->fails()) {
@@ -126,6 +129,7 @@ class AuthController extends Controller
         'email' => $request->input('email'),
         'phonenum' => $request->input('phonenum'),
         'role' => $request->input('role'),
+        'job_title' => $request->input('job_title'),
     ]);
 
     $user->syncRoles([$request->input('role')]);
