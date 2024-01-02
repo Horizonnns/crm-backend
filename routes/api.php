@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('getAllApps', [\App\Http\Controllers\FrontController::class, 'getAllApps']);
 Route::post('createApp', [\App\Http\Controllers\FrontController::class, 'createApp']);
 Route::delete('deleteApp/{id}', [\App\Http\Controllers\FrontController::class, 'deleteApp']);
+Route::post('searchApps', [\App\Http\Controllers\FrontController::class, 'searchApps']);
+
 
 
 // User routes

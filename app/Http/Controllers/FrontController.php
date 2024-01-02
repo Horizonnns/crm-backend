@@ -48,6 +48,24 @@ class FrontController extends Controller
     return response()->json(['applications' => $applications], 200);
     }
 
+    // Search application
+    public function searchApps(Request $request)
+    {
+    $searchTerm = $request->input('search_term');
+    
+    $applications = Applications::where('account_number', $searchTerm)
+        ->orWhere('specialist_name', 'like', "%$searchTerm%")
+        ->orWhere('phonenum', $searchTerm)
+        ->get();
+
+    if ($applications->isEmpty()) {
+        return response()->json(['message' => 'No applications found for the given search term'], 404);
+    }
+
+    return response()->json(['applications' => $applications], 200);
+    }
+
+
     // Delete application
     public function deleteApp($id) {
     $newApplication = Applications::find($id);
