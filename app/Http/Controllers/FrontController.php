@@ -41,5 +41,19 @@ class FrontController extends Controller
     return response()->json(['success' => true, 'applications' => $newApplication], 200);
     }
 
+    // Delete application
+    public function deleteApp($id) {
+    $newApplication = Applications::find($id);
+
+    if (!$newApplication) {
+        return response()->json(['error' => 'Application not found'], 404);
+    }
+
+    $newApplication->delete();
+
+    $newApplication = Applications::all();
+
+    return response()->json(['success' => true, 'applications' => $newApplication], 200);
+    }
 }
 
