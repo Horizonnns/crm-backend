@@ -76,6 +76,18 @@ class AuthController extends Controller
     {
     $credentials = $request->only('email', 'password');
 
+
+        // Admin validation
+        $validator = Validator::make($credentials, [
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8',
+    ]);
+
+    // Checking the validation
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
     if (Auth::attempt($credentials)) {
         $user = Auth::user();
         $token = $user->createToken('token')->plainTextToken;
