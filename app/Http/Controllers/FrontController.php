@@ -65,6 +65,43 @@ class FrontController extends Controller
     return response()->json(['applications' => $applications], 200);
     }
 
+    // Update application
+    public function updateApp(Request $request, $id)
+    {
+        $application = Applications::find($id);
+
+        if (!$application) {
+            return response()->json(['error' => 'Application not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'specialist_name' => 'required|string|max:255',
+            'phonenum' => 'required|string|max:15',
+            'topic' => 'required|string|max:255',
+            'account_number' => 'required|digits:5',
+            'createddate' => 'required|string|max:10',
+            'comment' => 'nullable|string',
+            'job_title' => 'nullable|string|max:255', 
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $application->update([
+            'specialist_name' => $request->input('specialist_name'),
+            'phonenum' => $request->input('phonenum'),
+            'topic' => $request->input('topic'),
+            'account_number' => $request->input('account_number'),
+            'createddate' => $request->input('createddate'),
+            'comment' => $request->input('comment'),
+            'job_title' => $request->input('job_title'),
+        ]);
+
+         $applications = Applications::all();
+
+        return response()->json(['success' => true, 'applications' => $applications], 200);
+    }
 
     // Delete application
     public function deleteApp($id) {

@@ -18,6 +18,7 @@ Route::get('getAllApps', [\App\Http\Controllers\FrontController::class, 'getAllA
 Route::post('createApp', [\App\Http\Controllers\FrontController::class, 'createApp']);
 Route::delete('deleteApp/{id}', [\App\Http\Controllers\FrontController::class, 'deleteApp']);
 Route::post('searchApps', [\App\Http\Controllers\FrontController::class, 'searchApps']);
+Route::put('updateApp/{id}', [\App\Http\Controllers\FrontController::class, 'updateApp']);
 
 
 
