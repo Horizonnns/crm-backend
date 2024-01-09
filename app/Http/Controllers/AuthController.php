@@ -74,15 +74,24 @@ class AuthController extends Controller
     // Admin login
     public function login(Request $request)
     {
-    $credentials = $request->only('email', 'password');
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-        $token = $user->createToken('token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60 * 24); // 1 day
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+        
+        $credentials = $request->only('email', 'password');
 
-        $users = User::all();
-        return response()->json(['user' => $user, 'accessToken' => $token, 'users' => $users], 200)->withCookie($cookie);
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('token')->plainTextToken;
+            $cookie = cookie('jwt', $token, 60 * 24); // 1 day
+
+            $users = User::all();
+            return response()->json(['user' => $user, 'accessToken' => $token, 'users' => $users], 200)->withCookie($cookie);
     }
 
     return response()->json(['message' => 'Invalid credentials!'], Response::HTTP_UNAUTHORIZED);
