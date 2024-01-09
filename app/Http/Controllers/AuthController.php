@@ -94,7 +94,7 @@ class AuthController extends Controller
             return response()->json(['user' => $user, 'accessToken' => $token, 'users' => $users], 200)->withCookie($cookie);
     }
 
-    return response()->json(['message' => 'Invalid credentials!'], Response::HTTP_UNAUTHORIZED);
+    return response()->json(['error' => $validator->errors(), 'message' => 'Invalid credentials!'], Response::HTTP_UNAUTHORIZED);
     }
 
     // Delete user
