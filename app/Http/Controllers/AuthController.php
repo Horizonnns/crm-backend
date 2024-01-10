@@ -46,7 +46,8 @@ class AuthController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8',
-        'job_title' => 'nullable|string|max:255', 
+        'job_title' => 'required|string|max:255', 
+        'phonenum' => 'required|string|max:9',
     ]);
 
         // Checking the validation
