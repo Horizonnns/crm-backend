@@ -48,6 +48,7 @@ class AuthController extends Controller
         'password' => 'required|string|min:8',
         'job_title' => 'required|string|max:255', 
         'phonenum' => 'required|string|max:9',
+        'role' => 'required|string|max:12',
     ]);
 
         // Checking the validation
