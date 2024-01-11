@@ -20,7 +20,8 @@ class FrontController extends Controller
         'account_number' => 'required|digits:5',
         'createddate' => 'required|string|max:10',
         'comment' => 'nullable|string',
-        'job_title' => 'nullable|string|max:255', 
+        'job_title' => 'nullable|string|max:255',
+        'status' => 'required|string|max:255',
     ]);
 
     if ($validator->fails()) {
@@ -35,6 +36,7 @@ class FrontController extends Controller
     'createddate' => $request->input('createddate'),
     'comment' => $request->input('comment'),
     'job_title' => $request->input('job_title'),
+    'status' => $request->input('status'),
     ]);
 
     $newApplication = Applications::all();
@@ -81,11 +83,16 @@ class FrontController extends Controller
             'account_number' => 'required|digits:5',
             'createddate' => 'required|string|max:10',
             'comment' => 'nullable|string',
-            'job_title' => 'nullable|string|max:255', 
+            'job_title' => 'nullable|string|max:255',
+            'status' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        if ($application->status == 'Завершен') {
+            return response()->json(['status'  => 'Нельзя изменить статус так как заявка завершена'], 400);
         }
 
         $application->update([
@@ -96,6 +103,7 @@ class FrontController extends Controller
             'createddate' => $request->input('createddate'),
             'comment' => $request->input('comment'),
             'job_title' => $request->input('job_title'),
+            'status' => $request->input('status'),
         ]);
 
          $applications = Applications::all();

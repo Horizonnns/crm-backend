@@ -29,7 +29,10 @@ Route::post('searchApps', [\App\Http\Controllers\FrontController::class, 'search
 Route::put('updateApp/{id}', [\App\Http\Controllers\FrontController::class, 'updateApp']);
 
 
+
 Route::middleware('auth:sanctum')->group(function() {
 Route::get('user', [\App\Http\Controllers\AuthController::class, 'user']);
 Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+
+// Route::put('updateApp/{id}', [\App\Http\Controllers\FrontController::class, 'updateApp'])->middleware('back-office');
 });
