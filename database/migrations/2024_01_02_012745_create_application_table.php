@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('createddate');
             $table->string('comment');
             $table->string('job_title');
+            $table->string('status');
         });
     }
 

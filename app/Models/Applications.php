@@ -18,5 +18,6 @@ class Applications extends Model
         'createddate',
         'comment',
         'job_title',
+        'status',
     ];
 }
