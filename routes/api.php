@@ -26,13 +26,11 @@ Route::post('createApp', [\App\Http\Controllers\FrontController::class, 'createA
 Route::delete('deleteApp/{id}', [\App\Http\Controllers\FrontController::class, 'deleteApp']);
 Route::get('getAllApps', [\App\Http\Controllers\FrontController::class, 'getAllApps']);
 Route::post('searchApps', [\App\Http\Controllers\FrontController::class, 'searchApps']);
-Route::put('updateApp/{id}', [\App\Http\Controllers\FrontController::class, 'updateApp']);
-
 
 
 Route::middleware('auth:sanctum')->group(function() {
 Route::get('user', [\App\Http\Controllers\AuthController::class, 'user']);
 Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 
-// Route::put('updateApp/{id}', [\App\Http\Controllers\FrontController::class, 'updateApp'])->middleware('back-office');
+Route::put('updateApp/{id}', [\App\Http\Controllers\FrontController::class, 'updateApp'])->middleware('back-office');
 });
