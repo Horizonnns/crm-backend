@@ -91,8 +91,9 @@ class FrontController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        if ($application->status == 'Завершен') {
-            return response()->json(['status'  => 'Нельзя изменить статус так как заявка завершена'], 400);
+        if ($application->status == 'Завершен' && $request->input('status') !== 'Завершен') {
+            $validator->errors()->add('status', 'Нельзя изменить статус, так как заявка завершена');
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
         $application->update([
