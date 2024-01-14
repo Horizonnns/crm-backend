@@ -82,8 +82,8 @@ class FrontController extends Controller
             'topic' => 'required|string|max:255',
             'account_number' => 'required|digits:5',
             'createddate' => 'required|string|max:10',
-            'comment' => 'nullable|string',
-            'job_title' => 'nullable|string|max:255',
+            'comment' => 'required|string|max:255',
+            'job_title' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
 
