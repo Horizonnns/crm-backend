@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('topic');
             $table->string('account_number');
             $table->string('createddate');
-            $table->string('comment');
+            $table->string('comment', 1000);
             $table->string('job_title');
             $table->string('status');
         });
